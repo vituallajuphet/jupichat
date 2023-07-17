@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {OnboardFlow} from 'react-native-onboard';
+import withAuthWrapper from '../../components/AuthWrapper/AuthWrapper';
 
 const OnBoard = (props: any) => {
-  const {navigation} = props;
+  const nav = useNavigation();
 
   return (
     <OnboardFlow
@@ -21,10 +22,10 @@ const OnBoard = (props: any) => {
       ]}
       type={'fullscreen'}
       onDone={() => {
-        navigation.navigate('Login');
+        nav.navigate('Login');
       }}
     />
   );
 };
 
-export default OnBoard;
+export default withAuthWrapper(OnBoard);

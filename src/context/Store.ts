@@ -1,3 +1,4 @@
+import {storeData} from './actions';
 import {TReducerAction, contextTypes} from './types';
 
 export const initial_state: contextTypes = {
@@ -9,6 +10,8 @@ export const reducer = (state: contextTypes, action: TReducerAction<any>) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
       const {online, user_data} = action.payload;
-      return {...state, online, user_data};
+      const data = {...state, online, user_data};
+      storeData(data);
+      return data;
   }
 };

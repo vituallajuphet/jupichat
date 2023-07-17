@@ -1,10 +1,12 @@
-import {View} from 'react-native';
+import {KeyboardAvoidingView, View} from 'react-native';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useTailwind} from 'tailwind-rn/dist';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
 import {Context} from '../../context/context';
+import { useNavigation } from '@react-navigation/native';
+import withAuthWrapper from '../../components/AuthWrapper/AuthWrapper';
 
 const Login = () => {
   const tw = useTailwind();
@@ -13,6 +15,7 @@ const Login = () => {
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const nav = useNavigation();
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -39,46 +42,49 @@ const Login = () => {
   }, [state]);
 
   return (
-    <View style={tw('flex-[1] items-center justify-center bg-black p-4 px-6')}>
-      <Text variant="displayMedium" style={tw('text-white')}>
-        JupiChat
-      </Text>
-      <Text>{state?.user_data?.uuid} xx</Text>
-      <View style={tw('w-full mt-4')}>
-        <TextInput
-          value={email}
-          onChangeText={text => setEmail(text)}
-          mode="outlined"
-          label="Email"
-          outlineColor="#222"
-          activeOutlineColor="#fff"
-        />
+    <KeyboardAvoidingView
+      // keyboardVerticalOffset={height}
+      behavior="padding"
+      style={tw('flex-[1] bg-black')}>
+      <View style={tw('h-full items-center justify-center p-4 px-6')}>
+        <Text variant="displayMedium" style={tw('text-white')}>
+          JupiChat
+        </Text>
+        <View style={tw('w-full mt-4')}>
+          <TextInput
+            value={email}
+            onChangeText={text => setEmail(text)}
+            mode="flat"
+            label="Email"
+            outlineColor="#222"
+          />
+        </View>
+        <View style={tw('w-full mt-8')}>
+          <TextInput
+            value={password}
+            onChangeText={text => setPassword(text)}
+            mode="flat"
+            label="Password"
+            outlineColor="#222"
+            activeOutlineColor="#fff"
+            secureTextEntry
+          />
+        </View>
+        <View style={tw('mt-8 w-full')}>
+          <Button
+            contentStyle={tw('p-1')}
+            mode="contained"
+            buttonColor="#fff"
+            labelStyle={tw('text-lg text-black')}
+            onPress={() => {
+              handleLogin();
+            }}>
+            LOGIN
+          </Button>
+        </View>
       </View>
-      <View style={tw('w-full mt-8')}>
-        <TextInput
-          value={password}
-          onChangeText={text => setPassword(text)}
-          mode="outlined"
-          label="Password"
-          outlineColor="#222"
-          activeOutlineColor="#fff"
-          secureTextEntry
-        />
-      </View>
-      <View style={tw('mt-8 w-full')}>
-        <Button
-          contentStyle={tw('p-1')}
-          mode="contained"
-          buttonColor="#fff"
-          labelStyle={tw('text-lg text-black')}
-          onPress={() => {
-            handleLogin();
-          }}>
-          LOGIN
-        </Button>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
-export default Login;
+export default withAuthWrapper(Login);
