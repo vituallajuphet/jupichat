@@ -5,8 +5,6 @@ import {Button, Text, TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
 import {Context} from '../../context/context';
-import { useNavigation } from '@react-navigation/native';
-import withAuthWrapper from '../../components/AuthWrapper/AuthWrapper';
 
 const Login = () => {
   const tw = useTailwind();
@@ -15,7 +13,6 @@ const Login = () => {
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const nav = useNavigation();
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -87,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default withAuthWrapper(Login);
+export default Login

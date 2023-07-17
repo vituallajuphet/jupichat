@@ -20,3 +20,13 @@ export const getData = async () => {
     return e;
   }
 };
+
+export const removeData = async () => {
+  try {
+    await AsyncStorage.removeItem('user_Data');
+    return true;
+  } catch (e) {
+    console.log('err', e);
+    return false;
+  }
+};

@@ -17,7 +17,7 @@ const withAuthWrapper = (Component: any) => {
         .then(r => {
           const obj = JSON.parse(r);
           if (obj?.user_data?.uid) {
-            nav.navigate('Home');
+            nav.navigate('HomeScreen');
             setTimeout(() => {
               setLoading(false);
             }, 1000);
@@ -29,7 +29,7 @@ const withAuthWrapper = (Component: any) => {
     }, []);
 
     if (state.online) {
-      nav.navigate('Home');
+      // nav.navigate('Home');
       setLoading(false);
       return;
     }
