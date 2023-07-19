@@ -13,7 +13,6 @@ export const reducer = (state: contextTypes, action: TReducerAction<any>) => {
     case 'LOGIN_SUCCESS':
       const {online, user_data} = action.payload;
       const data = {...state, online, user_data};
-      storeData(data);
       return data;
     case 'GET_USERDATA':
       return user_data;

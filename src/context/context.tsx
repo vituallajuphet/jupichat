@@ -15,12 +15,8 @@ export const AppProvider = (props: any) => {
 
   const fetchuserdata = async () => {
     const userdata = await getData();
+    const data = !!userdata ? JSON.parse(userdata) : initial_state;
 
-    
-
-    const data = userdata ? JSON.parse(userdata) : initial_state;
-
-    console.log("data", data , ';xdata', userdata)
 
     //@ts-ignore
     send({

@@ -14,13 +14,12 @@ const Feed = () => {
   const nav = useNavigation();
   const user = useUsers()
   
-  console.log("userssss", user)
-
 
   return (
     <View>
       <Text>Profile</Text>
-      <Text>{user?.uid}</Text>
+      <Text>ID: {user?.uid}</Text>
+      <Text>Email: {user?.email}</Text>
       <Button
         onPress={() => {
           signOut(auth)

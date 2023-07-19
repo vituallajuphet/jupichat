@@ -11,6 +11,7 @@ import ListItem from './ListItem';
 import {GiftedChat} from 'react-native-gifted-chat';
 
 import firestore from '@react-native-firebase/firestore';
+import {useUsers} from '../../hooks/useUsers';
 
 const Message = () => {
   const [permissions, setPermissions] = useState({});
@@ -19,42 +20,62 @@ const Message = () => {
   const nav = useNavigation();
   const tw = useTailwind();
 
+  const user: any = useUsers();
+
   const fireRef = firestore().collection('messages');
 
-
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
-  }, []);
+    setMessages([]);
+  }, [user]);
 
-  const addMessage = async message => {
-    await fireRef.add({
-      content: message,
-      date: 'asdasd',
-      user_id: 'xcvxcvxcv',
-    });
+  const addMessage = async data => {
+    console.log('xxxx', data);
+    await fireRef
+      .add({
+        content: data.text,
+        date: data.createdAt,
+        user_id: user?.uid,
+        _id: data._id,
+      })
+      .catch(err => {
+        console.log('errr', err);
+      });
   };
 
-  firestore()
-    .collection('messages')
-    .onSnapshot(
-      res => {
-        console.log('res', res.docs);
-      },
-      err => {
-        console.log('err', err);
-      },
-    );
+  useEffect(() => {
+    if (user) {
+      console.log('xxxxxx', user?.uid);
+      firestore()
+        .collection('messages')
+        .where('user_id', 'in', [
+          'O70mFh4VegSxqPnNcD2Ju4gGNU82',
+          'qgPbdz4vRocQOB1zrUFDoMNCGbL2',
+        ])
+        .orderBy('date', 'desc')
+        .onSnapshot(
+          res => {
+            setMessages(prev => {
+              return res.docs.map(d => {
+                const msg = d.data();
+                return {
+                  _id: msg._id,
+                  text: msg.content,
+                  createdAt: new Date(),
+                  user: {
+                    _id: msg.user_id === user?.uid ? 1 : 2,
+                    name: 'React Native',
+                    avatar: 'https://placeimg.com/140/140/any',
+                  },
+                };
+              });
+            });
+          },
+          err => {
+            console.log('err', err);
+          },
+        );
+    }
+  }, [user]);
 
   // useEffect(() => {
   //   const type = 'notification';
@@ -77,13 +98,24 @@ const Message = () => {
   //   notification.finish(result);
   // };
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
+  const onSend = (messages=[]) => {
+    if (user) {
+      const {text, _id, createdAt, user} = messages[0];
 
-    addMessage('asdasdasdasd');
-  }, []);
+      const msg = {
+        _id: _id,
+        text: text,
+        createdAt: new Date(),
+        user: {
+          _id: user?.uid,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      };
+
+      addMessage(msg);
+    }
+  };
 
   // const data = [
   //   {
@@ -106,6 +138,7 @@ const Message = () => {
 
   return (
     <View style={tw('flex-1')}>
+      <Text>{user?.uid}</Text>
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
