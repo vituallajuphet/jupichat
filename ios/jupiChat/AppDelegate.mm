@@ -3,12 +3,16 @@
 #import <React/RCTBundleURLProvider.h>
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+#import <Firebase.h>
 
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+ if([FIRApp defaultApp] == nil){
+    [FIRApp configure];
+  }
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
   self.moduleName = @"jupiChat";

@@ -1,6 +1,8 @@
 import {storeData} from './actions';
 import {TReducerAction, contextTypes} from './types';
 
+
+
 export const initial_state: contextTypes = {
   user_data: undefined,
   online: false,

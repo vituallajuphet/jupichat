@@ -5,10 +5,13 @@ import {Button, Text, TextInput} from 'react-native-paper';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../firebase';
 import {Context} from '../../context/context';
+import {storeData} from '../../context/actions';
+import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
   const tw = useTailwind();
   const context = useContext(Context);
+  const nav = useNavigation();
   const {send, state} = context;
 
   const [email, setEmail] = useState<string>('');
@@ -28,15 +31,13 @@ const Login = () => {
             online: true,
           },
         });
+        storeData(res.user);
+        nav.navigate('HomeScreen');
       })
       .catch(e => {
         console.log('errs', e);
       });
   };
-
-  useEffect(() => {
-    console.log('state?.user_data', state);
-  }, [state]);
 
   return (
     <KeyboardAvoidingView
@@ -70,7 +71,7 @@ const Login = () => {
         <View style={tw('mt-8 w-full')}>
           <Button
             contentStyle={tw('p-1')}
-            mode="contained"
+            mode="outlined"
             buttonColor="#fff"
             labelStyle={tw('text-lg text-black')}
             onPress={() => {
@@ -84,4 +85,4 @@ const Login = () => {
   );
 };
 
-export default Login
+export default Login;

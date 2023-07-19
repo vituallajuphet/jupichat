@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>584965853181-uisq5fmru8k7sfrfnril7bljlsv0hage.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.584965853181-uisq5fmru8k7sfrfnril7bljlsv0hage</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBa46ONCVaDMTsG_gz4MdT5EXFy1WBTtec</string>
+	<key>GCM_SENDER_ID</key>
+	<string>584965853181</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jupichat.app</string>
+	<key>PROJECT_ID</key>
+	<string>jupichat-dc489</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jupichat-dc489.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:584965853181:ios:33f75c4eacb16dd0669394</string>
+</dict>
+</plist>
