@@ -13,7 +13,12 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 import {useUsers} from '../../hooks/useUsers';
 
-const Message = () => {
+const Message = (props) => {
+
+  const {route} = props
+
+  const {params} = route;
+
   const [permissions, setPermissions] = useState({});
   const [messages, setMessages] = useState<any>([]);
 
@@ -29,10 +34,11 @@ const Message = () => {
   }, [user]);
 
   const addMessage = async data => {
-    console.log('xxxx', data);
+    console.log("xxxx")
     await fireRef
       .add({
         content: data.text,
+        receiverId: params?.userId,
         date: data.createdAt,
         user_id: user?.uid,
         _id: data._id,
@@ -44,13 +50,10 @@ const Message = () => {
 
   useEffect(() => {
     if (user) {
-      console.log('xxxxxx', user?.uid);
       firestore()
         .collection('messages')
-        .where('user_id', 'in', [
-          'O70mFh4VegSxqPnNcD2Ju4gGNU82',
-          'qgPbdz4vRocQOB1zrUFDoMNCGbL2',
-        ])
+        .where('user_id', '==', user.uid)
+        .where('receiverId', '==', params.userId)
         .orderBy('date', 'desc')
         .onSnapshot(
           res => {
@@ -138,7 +141,6 @@ const Message = () => {
 
   return (
     <View style={tw('flex-1')}>
-      <Text>{user?.uid}</Text>
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}

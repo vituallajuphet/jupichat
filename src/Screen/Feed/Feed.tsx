@@ -9,7 +9,7 @@ import { Button } from 'react-native-paper';
 import { getData, removeData } from '../../context/actions';
 import { useUsers } from '../../hooks/useUsers';
 
-const Feed = () => {
+const Profile = () => {
   const tw = useTailwind();
   const nav = useNavigation();
   const user = useUsers()
@@ -38,4 +38,4 @@ const Feed = () => {
   );
 };
 
-export default Feed;
+export default Profile;

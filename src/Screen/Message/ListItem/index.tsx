@@ -2,16 +2,22 @@ import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import React from 'react';
 import {useTailwind} from 'tailwind-rn';
 import {Badge} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 const ListItem = props => {
   const {data} = props;
   const tw = useTailwind();
+  const navigator = useNavigation();
 
   const renderItem = ({item}) => {
+    const {_data: dta} = item as any;
+
     return (
       <TouchableOpacity
         onPress={() => {
-          console.log("item.id", item.id)
+          navigator.navigate('Messages', {
+            userId: dta?.fk_id,
+          });
         }}
         key={item.id}
         style={tw('flex-row items-center justify-between py-4')}>
@@ -24,7 +30,9 @@ const ListItem = props => {
           />
         </View>
         <View style={tw('flex-1 px-2 pl-4')}>
-          <Text style={tw('font-bold text-lg mb-2')}>{item.name}</Text>
+          <Text style={tw('font-bold text-lg mb-2')}>
+            {dta?.first_name} {dta?.last_name}
+          </Text>
           <Text style={tw('text-xs text-gray-400')}>
             This is a content motherdfd
           </Text>
